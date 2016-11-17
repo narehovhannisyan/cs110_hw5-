@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body id="one"; background="http://media.istockphoto.com/photos/abstract-cubes-retro-styled-colorful-background-picture-id508795172?k=6&m=508795172&s=170667a&w=0&h=uxKISA4xMNkrBCcEFhdN5mm-ZDv8LFzWUhMMmG3CNuQ="> 
+<style>
+#one {
+    background-repeat: no-repeat;
+    background-size: 1000px, 1000px;
+}
+</style>
+
+ 
+ <canvas id="canvas" width="1000" height="600"></canvas>
+
+
+
+<script>
+let c=document.getElementById("canvas");
+let ctx=c.getContext("2d");
+
+const NUM_POINTS = 200; 
+		const points = [];
+        
+        function getRandomColor() {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+		for(let i = 0; i < NUM_POINTS; i++) {
+
+		  points.push({
+
+		    x: Math.random() * canvas.width,
+
+		    y: Math.random() * canvas.height,
+		    r     :  10,
+
+		    sAngle : 2*Math.PI,
+            eAngle: 2*Math.PI,
+
+           
+
+		    xDelta: 1, 
+
+		    yDelta: 1, 
+
+		    color: getRandomColor()
+
+		  });
+
+		}
+
+
+
+
+
+    let draw = function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        points.forEach(function(point) {
+            ctx.fillStyle = point.color
+   ctx.beginPath()
+   ctx.arc(point.x, point.y, point.r, 0, 2*Math.PI)
+   ctx.fill() 
+   if(point.x+point.r>canvas.width || point.x < 0) {point.xDelta *=-1;
+   } else if(point.y+point.r>canvas.height || point.y < 0) {point.yDelta *= -1}; 
+   point.x = point.x+point.xDelta;
+   point.y = point.y+ point.yDelta;
+})
+
+        };
+    
+let animate = function() {
+        draw();
+        window.setTimeout(animate, 10);
+    };
+    animate();
+
+      
+      
+
+</script>
+</body>
+</html>
